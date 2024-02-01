@@ -81,7 +81,7 @@ async function readCSV(filePath) {
 
 // Function to write CSV to GCS
 async function writeCSV(filePath, data) {
-    console.log("read csv: " + filePath);
+    console.log("write csv: " + filePath + "----" + data);
     const file = storage.bucket('my-csv-buckett').file(filePath);
 
     const csvWriter = createCsvWriter({
@@ -93,9 +93,15 @@ async function writeCSV(filePath, data) {
 
     // Streamify the local file for upload
     const stream = createReadStream(fs.readFileSync('temp.csv'));
+    stream.on('end', () => {
+        // Now the stream is complete, proceed with uploading
+        file.createWriteStream().end(stream.readableStreamBody);
+    })
+    .on('error', (error) => {
+        console.error('Error during CSV write:', error);
+        reject(error);
+    });
 
-    // Upload the stream to GCS
-    await file.createWriteStream().end(stream);
 
     // Delete the local file
     fs.unlinkSync('temp.csv');
