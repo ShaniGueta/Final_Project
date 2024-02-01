@@ -6,7 +6,7 @@ const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 const app = express();
 const session = require('express-session');
 const path = require('path');
-const port = 3000;
+// const port = 3000;
 
 app.use(express.static(path.join(__dirname, "static")));
 app.use(bodyParser.json());
@@ -333,7 +333,13 @@ app.get('/TrainingPage', (req, res) => {
 app.get('/password', (req, res) => {
     res.sendFile(path.join(__dirname, 'password.html'));
 });
+//
+// app.listen(port, () => {
+//     console.log("Server running on port", port);
+// });
 
+
+const port = process.env.PORT;
 app.listen(port, () => {
-    console.log("Server running on port", port);
+  console.log(`Server running on port ${port}`);
 });
