@@ -9,6 +9,7 @@ const path = require('path');
 const { Storage } = require('@google-cloud/storage');
 const { createReadStream } = require('streamifier');
 
+
 const keyFilePath = path.join(__dirname, 'finalproject-413014-fb11cd023fb3.json');
 const storage = new Storage({
     keyFilename: keyFilePath,
@@ -97,23 +98,42 @@ async function writeCSV(bucketName, filePath, data) {
     fs.unlinkSync('temp.csv');
 }
 
+// function readPasswordsFromCSV() {
+//     return new Promise((resolve, reject) => {
+//         const filePath = path.join(__dirname,"https://storage.googleapis.com/my-csv-buckett/Input.csv");
+//         fs.readFile(filePath, 'utf8', (err, data) => {
+//             if (err) {
+//                 reject(err);
+//                 return;
+//             }
+//             const lines = data.split('\n');
+//             const passwords = lines.map(line => {
+//                 const parts = line.split(',');
+//                 return parts[13]; // Assuming the password is the 14 element in each line
+//             });
+//             resolve(passwords);
+//         });
+//     });
+// }
+
 function readPasswordsFromCSV() {
-    return new Promise((resolve, reject) => {
-        const filePath = path.join(__dirname,"https://storage.googleapis.com/my-csv-buckett/Input.csv");
-        fs.readFile(filePath, 'utf8', (err, data) => {
-            if (err) {
-                reject(err);
-                return;
-            }
-            const lines = data.split('\n');
-            const passwords = lines.map(line => {
+    return new Promise(async (resolve, reject) => {
+        const filePath = 'Input.csv';  // Assuming the file is in the root of your GCS bucket
+        const file = storage.bucket('my-csv-buckett').file(filePath);
+
+        try {
+            const fileContents = await file.download();
+            const passwords = fileContents[0].toString().split('\n').map(line => {
                 const parts = line.split(',');
-                return parts[13]; // Assuming the password is the 14 element in each line
+                return parts[13]; // Assuming the password is the 14th element in each line
             });
             resolve(passwords);
-        });
+        } catch (error) {
+            reject(error);
+        }
     });
 }
+
 
 app.use(session({
     secret: 'your secret key',  // Choose a secret for session encoding
