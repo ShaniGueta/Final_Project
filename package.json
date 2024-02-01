@@ -1,0 +1,20 @@
+{
+  "name": "package.jason",
+  "version": "3.1.1",
+  "description": "csv",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "csv-parser": "^3.0.0",
+    "csv-writer": "^1.6.0",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "init": "^0.1.2",
+    "nodemon": "^3.0.3"
+  },
+  "main": "index.js"
+}

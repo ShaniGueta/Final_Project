@@ -1,0 +1,267 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    background-color: #f9f9f9;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 50px auto;
+    font-size: 1.25em;
+}
+
+#codeEnter {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0 auto;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-size: 30px;
+}
+
+h1, h2 {
+    color: #333;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+    padding-bottom: 10px;
+}
+
+input[type="text"] {
+    padding: 0px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1.5em;
+    width: 100%;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    padding: 15px 10px;
+    display: block;
+    margin: 0 auto;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 1em;
+    text-decoration: none;
+    /display: inline-block;/
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#consentForm {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    margin-top: 20px;
+}
+
+#submitButton:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+#consentForm label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+#consentForm input[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 1.5em;
+}
+
+#consentForm input[type="submit"]:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+#consentForm input[type="radio"] {
+    margin-right: 5px;
+}
+
+
+
+#CrowdExplainContinue button {
+    background-color: #007bff;
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 1.5em;
+}
+
+#OneTimeExplainContinue button {
+    background-color: #007bff;
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 1.5em;
+}
+
+#ExplainBody {
+    font-size: 1.25em;
+}
+
+
+
+
+
+.training-container {
+    background-color: #f9f9f9;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 50px auto;
+    font-size: 1.25em;
+}
+
+#trainingPage {
+    text-align: left;
+    margin-top: 20px;
+}
+
+
+#trainingPage label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+#trainingPage input[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 1.5em;
+}
+
+#trainingPage input[type="submit"]:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+#trainingPage input[type="radio"] {
+    margin-right: 5px;
+}
+
+
+
+#codeEnter .container {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 900px;
+    margin: 50px auto;
+    text-align: center;
+}
+
+#codeEnter h1 {
+    color: #007bff;
+    margin-bottom: 20px;
+}
+
+#codeEnter label {
+    display: block;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+#codeEnter input[type="text"] {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1em;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#codeEnter button {
+    background-color: #007bff;
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 1em;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+#codeEnter button:hover {
+    background-color: #0056b3;
+}
+#ExperimentOneTime .container {
+    background-color: #f9f9f9;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 50px auto;
+    text-align: center;
+    font-size: 1.5em;
+
+}
+
+
+#ExperimentOneTime button {
+    background-color: #007bff;
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 1.5em;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+
+}
+
+#ExperimentOneTime button:hover {
+    background-color: #0056b3;
+}
+
+#ExperimentOneTime input[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    /font-size: 1.5em;/
+    margin-top: 20px;
+
+}
+
+#ExperimentOneTime input[type="submit"]:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}

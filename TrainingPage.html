@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Training</title>
+    <link rel="stylesheet"  href="/styles.css">
+</head>
+<body>
+<div class="training-container">
+    <h1>Training Question</h1>
+    <p>You have a pitcher containing balls in two colors: yellow and green. </p>
+    <p>You are asked to determine which color of ball is more common in the pitcher.</p>
+    <p>The pitcher holds a total of 100 balls, with 65 of one color and 35 of another color.</p>
+    <p>You have drawn one ball from the pitcher, and it is green.</p>
+    <p><b>Based on this information, <br>
+        what is your choice regarding the dominant color in the pitcher?</b></p>
+    <p>Remember, you are making a guess based on limited information. There is no certainty in your answer.</p>
+
+    <form id="trainingPage" action="/submit-training-answer" method="post">
+        <input type="radio" id="green" name="pitcherColor" value="green"> <b>Green</b>
+        <label for="green"></label>
+
+        <input type="radio" id="yellow" name="pitcherColor" value="yellow"> <b>Yellow</b>
+        <label for="yellow"></label>
+
+        <input type="submit" value="Submit" id="submitButton" disabled>
+    </form>
+</div>
+
+    <script>
+        // Enable submit button only if an option is selected
+        document.getElementById('trainingPage').addEventListener('change', function () {
+            var submitButton = document.getElementById('submitButton');
+            var options = document.querySelectorAll('input[name="pitcherColor"]');
+            submitButton.disabled = true;
+
+            options.forEach(function (option) {
+                if (option.checked) {
+                    submitButton.disabled = false;
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

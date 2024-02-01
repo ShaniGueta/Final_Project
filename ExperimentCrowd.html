@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to the Experiment Page</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="container" id="ExperimentOneTime">
+
+    <h1>Welcome to the Experiment Page</h1>
+
+    <p>In this experiment, you are participating in a group decision-making scenario using 'clickcoins' as mock-up currency.</p>
+    </p> 1 clickcoin = $0.003.</p>
+
+    <p><h2>Payment Details:</h2></p>
+    <p><b>Base Payment:</b> You start with <b>420</b> clickcoins.</p>
+    <p><b>Impact of Decisions:</b>Your choices during the experiment can either increase or decrease your clickcoins.</p>
+
+    <br>
+    <p><h2>Objective:</h2></p>
+    <p>Your task is to determine the dominant color in a pitcher</p>
+    <p>which is defined by the color of the majority of the balls it contains.</p>
+
+    <p><h3>Key Information:</h3></p>
+
+    <p><b>Balls Colors:</b> Blue and Red.</p>
+    <p id="ballRatio"><b>Pitcher Contents:</b>The pitcher has <b>100</b> balls, with <b>{BallRatio}</b> of one color and <b>{OtherColorBallRatio}</b> of another color. </p>
+    <p id="groupSize"><b>Group Size:</b> You are one of <b>{groupsize}</b> participants.</p>
+    <p id="relativeMajority"> <b>Consensus Requirement:</b> Revealing the pitcher's color needs agreement from at least <b>{Relative Majority}</b> members </p>
+    <p id="signalColor"><b>Your Observation:</b> You have drawn a ball from the pitcher, and it is <b><span id="chosenColor"></span></b></p>
+    <p id="LotteryColor"><b>Lottery Card Color:</b> The color of the Lottery Card you can buy is: <b>{Lottery Card Color}</b></p>
+    <br>
+    <p><h2>Cost and Reward Structure:</h2></p>
+
+    <p><strong>Cost to Reveal:</strong> Revealing the color costs 84 clickcoins.</p>
+    <p><strong>Reward for Correct Reveal:</strong> </p>
+    <p>If enough group members choose to reveal and the pitcher has the majority of balls in the same color as the lottery card, </p>
+    <p>each revealing member <b>receives 168 clickcoins</b> (84 as a refund and an additional 84).</p>
+    <p><strong>Penalty for Incorrect Reveal:</strong> </p>
+    <p>If enough group members choose to reveal and the pitcher has the majority of balls in a different color from the lottery card, </p>
+    <p>each revealing member <b>loses their 84 clickcoins</b> without any additional reward.</p>
+    <p><strong>No Reveal, No Cost:</strong></p>
+    <p>If there are not enough group members who choose to reveal, no clickcoins are deducted.</p>
+    <br>
+    <p><h2>Your Decision:</h2></p>
+    <p>Considering the information and the color of the ball you drew, </p>
+    <p><b> would you choose to spend 84 clickcoins to reveal the pitcher’s color?</b></p>
+
+    <form id="ExperimentCrowdPage" action='/submit-experiment-answer-Crowd' method="post" onsubmit="return submitForm()">
+        <!-- Radio buttons for decision -->
+        <input type="radio" id="yesRadio" name="hiddenUserColor" value="Yes" onchange="updateSubmitButtonState()"> <b> Yes</b>
+        <label for="yesRadio"></label>
+        <input type="radio" id="noRadio" name="hiddenUserColor" value="No" onchange="updateSubmitButtonState()"><b> No</b>
+        <label for="noRadio"></label>
+
+        <input type="hidden" id="hiddenChosenColor" name="hiddenChosenColor">
+
+        <button type="submit" id="submitButton" disabled>Submit</button>
+    </form>
+
+    <script>
+        // Randomly choose between "Blue" and "Red"
+        const colors = ["Blue", "Red"];
+        const chosenColor = colors[Math.floor(Math.random() * colors.length)];
+
+        // Update the content of the HTML element with the chosen color
+        document.getElementById('chosenColor').innerText = chosenColor;
+
+        // Set the value of the hidden input for chosenColor
+        document.getElementById('hiddenChosenColor').value = chosenColor;
+
+        // Function to update the state of the submit button
+        function updateSubmitButtonState() {
+            const userColor = document.querySelector('input[name="hiddenUserColor"]:checked');
+            const submitButton = document.getElementById('submitButton');
+            submitButton.disabled = !userColor;
+        }
+    </script>
+</body>
+</html>
