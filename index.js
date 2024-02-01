@@ -7,11 +7,14 @@ const app = express();
 const session = require('express-session');
 const path = require('path');
 const { Storage } = require('@google-cloud/storage');
-const { createReadStream } = require('streamifier'); // Additional library for streamifying the local file
-// const storage = new Storage();
+const { createReadStream } = require('streamifier');
+
+const keyFilePath = path.join(__dirname, 'finalproject-413014-fb11cd023fb3.json');
 const storage = new Storage({
-    keyFilename: '/Users/shani/PycharmProjects/Final_Project/finalproject-413014-fb11cd023fb3.json', // Path to your JSON key file
+    keyFilename: keyFilePath,
 });
+
+
 app.use(express.static(path.join(__dirname, "static")));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
