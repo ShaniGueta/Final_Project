@@ -49,6 +49,7 @@ app.use(session({
 
 // Function to read CSV file from GCS
 async function readCSV(filePath) {
+    console.log("read csv: " + filePath);
     const file = storage.bucket('my-csv-buckett').file(filePath);
     const data = [];
 
@@ -80,6 +81,7 @@ async function readCSV(filePath) {
 
 // Function to write CSV to GCS
 async function writeCSV(bucketName, filePath, data) {
+    console.log("read csv: " + filePath);
     const file = storage.bucket(bucketName).file(filePath);
 
     const csvWriter = createCsvWriter({
@@ -169,7 +171,7 @@ function generatePassword() {
 app.post('/submit-consent', async (req, res) => {
     try {
         // Read the CSV file containing user data
-        const inputFilePath = "https://storage.googleapis.com/my-csv-buckett/Input.csv"; // Replace with the actual path to your "Input" CSV file
+        const inputFilePath = "Input.csv"; // Replace with the actual path to your "Input" CSV file
         const allRows = await readCSV(inputFilePath);
 
         if (allRows.length === 0) {
