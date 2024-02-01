@@ -227,12 +227,19 @@ app.post('/submit-training-answer', async (req, res) => {
         // Read the existing CSV file
         const data = await readCSV(csvFilePath);
 
-        // Update the selected row with the user's answer
-        data[selectedIndex][columnName] = userAnswer;
+        const updatedData = data.map((row, index) => {
+            if (index === selectedIndex) {
+                // Update the specific column in the selected row
+                return {
+                    ...row,
+                    [columnName]: userAnswer,
+                };
+            }
+            return row;
+        });
 
         // Write the updated data back to the existing CSV file
-        await writeCSV(csvFilePath, data);
-
+        await writeCSV(csvFilePath, updatedData);
         console.log('User training answer saved to existing CSV file.');
 
         if (req.session.selectedRow.senario === '1') {
@@ -281,13 +288,22 @@ app.post('/submit-experiment-answer-OneTime', async (req, res) => {
         // Read the existing CSV file
         const data = await readCSV(csvFilePath);
 
-        // Update the selected row with the details
-        data[selectedIndex]['signal'] = Signal;
-        data[selectedIndex]['decision'] = ChosenColor;
-        data[selectedIndex]['GeneratedPassword'] = uniquePassword;
+        // Update the selected row with the details using map
+        const updatedData = data.map((row, index) => {
+            if (index === selectedIndex) {
+                return {
+                    ...row,
+                    signal: Signal,
+                    decision: ChosenColor,
+                    GeneratedPassword: uniquePassword,
+                };
+            }
+            return row;
+        });
 
         // Write the updated data back to the existing CSV file
-        await writeCSV(csvFilePath, data);
+        await writeCSV(csvFilePath, updatedData);
+
 
         console.log('User details saved to existing CSV file.');
 
@@ -331,13 +347,22 @@ app.post('/submit-experiment-answer-Crowd', async (req, res) => {
         // Store the generated password and all parameters in the session
         req.session.generatedPassword = uniquePassword;
 
-        // Update the selected row with the details
-        data[selectedIndex]['signal'] = Signal;
-        data[selectedIndex]['decision'] = ChosenColor;
-        data[selectedIndex]['GeneratedPassword'] = uniquePassword;
+        // Update the selected row with the details using map
+        const updatedData = data.map((row, index) => {
+            if (index === selectedIndex) {
+                return {
+                    ...row,
+                    signal: Signal,
+                    decision: ChosenColor,
+                    GeneratedPassword: uniquePassword,
+                };
+            }
+            return row;
+        });
 
         // Write the updated data back to the existing CSV file
-        await writeCSV(csvFilePath, data);
+        await writeCSV(csvFilePath, updatedData);
+
 
         console.log('User details saved to existing CSV file.');
 
