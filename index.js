@@ -6,7 +6,9 @@ const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 const app = express();
 const session = require('express-session');
 const path = require('path');
-// const port = 3000;
+const { Storage } = require('@google-cloud/storage');
+const { createReadStream } = require('streamifier'); // Additional library for streamifying the local file
+const storage = new Storage();
 
 app.use(express.static(path.join(__dirname, "static")));
 app.use(bodyParser.json());
@@ -20,11 +22,31 @@ app.use(session({
 
 
 
-// Function to read CSV file
+// // Function to read CSV file
+// async function readCSV(filePath) {
+//     const data = [];
+//     return new Promise((resolve, reject) => {
+//         fs.createReadStream(filePath)
+//             .pipe(csv())
+//             .on('data', (row) => {
+//                 data.push(row);
+//             })
+//             .on('end', () => {
+//                 resolve(data);
+//             })
+//             .on('error', (error) => {
+//                 reject(error);
+//             });
+//     });
+// }
+
+// Function to read CSV file from GCS
 async function readCSV(filePath) {
+    const file = storage.bucket('my-csv-buckett').file(filePath);
     const data = [];
+
     return new Promise((resolve, reject) => {
-        fs.createReadStream(filePath)
+        file.createReadStream()
             .pipe(csv())
             .on('data', (row) => {
                 data.push(row);
@@ -39,13 +61,35 @@ async function readCSV(filePath) {
 }
 
 // Function to write CSV from an array of objects
-async function writeCSV(filePath, data) {
+// async function writeCSV(filePath, data) {
+//     const csvWriter = createCsvWriter({
+//         path: filePath,
+//         header: Object.keys(data[0]).map((key) => ({ id: key, title: key })),
+//     });
+//
+//     return csvWriter.writeRecords(data);
+// }
+
+
+// Function to write CSV to GCS
+async function writeCSV(bucketName, filePath, data) {
+    const file = storage.bucket(bucketName).file(filePath);
+
     const csvWriter = createCsvWriter({
-        path: filePath,
+        path: 'temp.csv', // Temporarily write to a local file
         header: Object.keys(data[0]).map((key) => ({ id: key, title: key })),
     });
 
-    return csvWriter.writeRecords(data);
+    await csvWriter.writeRecords(data);
+
+    // Streamify the local file for upload
+    const stream = createReadStream(fs.readFileSync('temp.csv'));
+
+    // Upload the stream to GCS
+    await file.createWriteStream().end(stream);
+
+    // Delete the local file
+    fs.unlinkSync('temp.csv');
 }
 
 function readPasswordsFromCSV() {
@@ -145,7 +189,7 @@ app.post('/submit-training-answer', async (req, res) => {
         const userAnswer = req.body.pitcherColor;
         const selectedIndex = req.session.selectedIndex;
         const columnName = 'TestDecision';
-        const csvFilePath = 'Input.csv';
+        const csvFilePath = `gs://${process.env.my-csv-buckett}/Input.csv`;
 
         // Read the existing CSV file
         const data = await readCSV(csvFilePath);
@@ -197,7 +241,8 @@ app.post('/submit-experiment-answer-OneTime', async (req, res) => {
         const selectedIndex = req.session.selectedIndex;
 
         // Specify the path to your existing CSV file
-        const csvFilePath = 'Input.csv';
+        const csvFilePath = `gs://${process.env.my-csv-buckett}/Input.csv`;
+
 
         // Read the existing CSV file
         const data = await readCSV(csvFilePath);
@@ -230,7 +275,8 @@ app.post('/submit-experiment-answer-Crowd', async (req, res) => {
         const selectedIndex = req.session.selectedIndex;
 
         // Specify the path to your existing CSV file
-        const csvFilePath = 'Input.csv';
+        const csvFilePath = `gs://${process.env.my-csv-buckett}/Input.csv`;
+
 
         // Read the existing CSV file
         const data = await readCSV(csvFilePath);
