@@ -217,8 +217,7 @@ app.post('/submit-training-answer', async (req, res) => {
         const userAnswer = req.body.pitcherColor;
         const selectedIndex = req.session.selectedIndex;
         const columnName = 'TestDecision';
-        // const csvFilePath = `gs://${process.env.my-csv-buckett}/Input.csv`;
-        const csvFilePath = "https://storage.googleapis.com/my-csv-buckett/Input.csv";
+        const csvFilePath = "Input.csv";
         // Read the existing CSV file
         const data = await readCSV(csvFilePath);
 
@@ -270,7 +269,7 @@ app.post('/submit-experiment-answer-OneTime', async (req, res) => {
 
         // Specify the path to your existing CSV file
         // const csvFilePath = `gs://${process.env.my-csv-buckett}/Input.csv`;
-        const csvFilePath = "https://storage.googleapis.com/my-csv-buckett/Input.csv";
+        const csvFilePath = "Input.csv";
 
 
         // Read the existing CSV file
@@ -306,7 +305,7 @@ app.post('/submit-experiment-answer-Crowd', async (req, res) => {
         // Specify the path to your existing CSV file
         // const csvFilePath = `gs://${process.env.my-csv-buckett}/Input.csv`;
         // const csvFilePath =`gs://${process.env.my-csv-buckett}/Input.csv`;
-        const csvFilePath = "https://storage.googleapis.com/my-csv-buckett/Input.csv";
+        const csvFilePath = "Input.csv";
 
         // Read the existing CSV file
         const data = await readCSV(csvFilePath);
