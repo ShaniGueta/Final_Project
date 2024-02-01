@@ -99,7 +99,7 @@ async function writeCSV(bucketName, filePath, data) {
 
 function readPasswordsFromCSV() {
     return new Promise((resolve, reject) => {
-        const filePath = path.join(__dirname,`https://storage.googleapis.com/my-csv-buckett/Input.csv`);
+        const filePath = path.join(__dirname,"https://storage.googleapis.com/my-csv-buckett/Input.csv");
         fs.readFile(filePath, 'utf8', (err, data) => {
             if (err) {
                 reject(err);
@@ -148,7 +148,7 @@ function generatePassword() {
 app.post('/submit-consent', async (req, res) => {
     try {
         // Read the CSV file containing user data
-        const inputFilePath = `https://storage.googleapis.com/my-csv-buckett/Input.csv`; // Replace with the actual path to your "Input" CSV file
+        const inputFilePath = "https://storage.googleapis.com/my-csv-buckett/Input.csv"; // Replace with the actual path to your "Input" CSV file
         const allRows = await readCSV(inputFilePath);
 
         if (allRows.length === 0) {
@@ -195,7 +195,7 @@ app.post('/submit-training-answer', async (req, res) => {
         const selectedIndex = req.session.selectedIndex;
         const columnName = 'TestDecision';
         // const csvFilePath = `gs://${process.env.my-csv-buckett}/Input.csv`;
-        const csvFilePath = `https://storage.googleapis.com/my-csv-buckett/Input.csv`;
+        const csvFilePath = "https://storage.googleapis.com/my-csv-buckett/Input.csv";
         // Read the existing CSV file
         const data = await readCSV(csvFilePath);
 
@@ -247,7 +247,7 @@ app.post('/submit-experiment-answer-OneTime', async (req, res) => {
 
         // Specify the path to your existing CSV file
         // const csvFilePath = `gs://${process.env.my-csv-buckett}/Input.csv`;
-        const csvFilePath = `https://storage.googleapis.com/my-csv-buckett/Input.csv`;
+        const csvFilePath = "https://storage.googleapis.com/my-csv-buckett/Input.csv";
 
 
         // Read the existing CSV file
@@ -283,7 +283,7 @@ app.post('/submit-experiment-answer-Crowd', async (req, res) => {
         // Specify the path to your existing CSV file
         // const csvFilePath = `gs://${process.env.my-csv-buckett}/Input.csv`;
         // const csvFilePath =`gs://${process.env.my-csv-buckett}/Input.csv`;
-        const csvFilePath = `https://storage.googleapis.com/my-csv-buckett/Input.csv`;
+        const csvFilePath = "https://storage.googleapis.com/my-csv-buckett/Input.csv";
 
         // Read the existing CSV file
         const data = await readCSV(csvFilePath);
