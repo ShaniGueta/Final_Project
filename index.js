@@ -14,6 +14,7 @@ const keyFilePath = path.join(__dirname, 'finalproject-413014-fb11cd023fb3.json'
 const storage = new Storage({
     keyFilename: keyFilePath,
 });
+console.log(keyFilePath);
 
 
 app.use(express.static(path.join(__dirname, "static")));
