@@ -2,9 +2,9 @@
   "name": "package.jason",
   "version": "3.1.1",
   "description": "csv",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+"scripts": {
+  "start": "node server.js"
+},
   "author": "",
   "license": "ISC",
   "dependencies": {
