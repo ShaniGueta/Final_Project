@@ -80,9 +80,9 @@ async function readCSV(filePath) {
 
 
 // Function to write CSV to GCS
-async function writeCSV(bucketName, filePath, data) {
+async function writeCSV(filePath, data) {
     console.log("read csv: " + filePath);
-    const file = storage.bucket(bucketName).file(filePath);
+    const file = storage.bucket('my-csv-buckett').file(filePath);
 
     const csvWriter = createCsvWriter({
         path: 'temp.csv', // Temporarily write to a local file
