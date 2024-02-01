@@ -8,8 +8,10 @@ const session = require('express-session');
 const path = require('path');
 const { Storage } = require('@google-cloud/storage');
 const { createReadStream } = require('streamifier'); // Additional library for streamifying the local file
-const storage = new Storage();
-
+// const storage = new Storage();
+const storage = new Storage({
+    keyFilename: '/Users/shani/PycharmProjects/Final_Project/finalproject-413014-fb11cd023fb3.json', // Path to your JSON key file
+});
 app.use(express.static(path.join(__dirname, "static")));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -94,7 +96,7 @@ async function writeCSV(bucketName, filePath, data) {
 
 function readPasswordsFromCSV() {
     return new Promise((resolve, reject) => {
-        const filePath = path.join(__dirname, 'Input.csv');
+        const filePath = path.join(__dirname,`gs://my-csv-buckett/Input.csv`);
         fs.readFile(filePath, 'utf8', (err, data) => {
             if (err) {
                 reject(err);
@@ -143,8 +145,8 @@ function generatePassword() {
 app.post('/submit-consent', async (req, res) => {
     try {
         // Read the CSV file containing user data
-        const inputFilePath = 'Input.csv'; // Replace with the actual path to your "Input" CSV file
-        const allRows = await readCSV(inputFilePath , 0);
+        const inputFilePath = `gs://my-csv-buckett/Input.csv`; // Replace with the actual path to your "Input" CSV file
+        const allRows = await readCSV(inputFilePath);
 
         if (allRows.length === 0) {
             res.send('No rows available!');
@@ -189,8 +191,8 @@ app.post('/submit-training-answer', async (req, res) => {
         const userAnswer = req.body.pitcherColor;
         const selectedIndex = req.session.selectedIndex;
         const columnName = 'TestDecision';
-        const csvFilePath = `gs://${process.env.my-csv-buckett}/Input.csv`;
-
+        // const csvFilePath = `gs://${process.env.my-csv-buckett}/Input.csv`;
+        const csvFilePath = `gs://my-csv-buckett/Input.csv`;
         // Read the existing CSV file
         const data = await readCSV(csvFilePath);
 
@@ -241,7 +243,8 @@ app.post('/submit-experiment-answer-OneTime', async (req, res) => {
         const selectedIndex = req.session.selectedIndex;
 
         // Specify the path to your existing CSV file
-        const csvFilePath = `gs://${process.env.my-csv-buckett}/Input.csv`;
+        // const csvFilePath = `gs://${process.env.my-csv-buckett}/Input.csv`;
+        const csvFilePath = `gs://my-csv-buckett/Input.csv`;
 
 
         // Read the existing CSV file
@@ -275,8 +278,9 @@ app.post('/submit-experiment-answer-Crowd', async (req, res) => {
         const selectedIndex = req.session.selectedIndex;
 
         // Specify the path to your existing CSV file
-        const csvFilePath = `gs://${process.env.my-csv-buckett}/Input.csv`;
-
+        // const csvFilePath = `gs://${process.env.my-csv-buckett}/Input.csv`;
+        // const csvFilePath =`gs://${process.env.my-csv-buckett}/Input.csv`;
+        const csvFilePath = `gs://my-csv-buckett/Input.csv`;
 
         // Read the existing CSV file
         const data = await readCSV(csvFilePath);
