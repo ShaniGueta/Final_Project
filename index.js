@@ -237,6 +237,7 @@ app.post('/submit-training-answer', async (req, res) => {
             }
             return row;
         });
+        console.log("updatedData: " + updatedData + "----"+ "data: " + data )
 
         // Write the updated data back to the existing CSV file
         await writeCSV(csvFilePath, updatedData);
