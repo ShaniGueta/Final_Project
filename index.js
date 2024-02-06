@@ -85,7 +85,7 @@ app.use(session({
 
 app.post('/submit-code', (req, res) => {
     const code = req.body.code;
-    console.log('Received code: ${code}');
+    console.log('Received code:' ${code});
     req.session.userCode = code;
     res.redirect('/mainGame');
 });
@@ -124,7 +124,7 @@ app.post('/submit-consent', async (req, res) => {
         req.session.selectedRow = allRows[randomIndex];
         req.session.usedRows = req.session.usedRows || [];
         req.session.usedRows.push(randomIndex);
-        console.log('Selected Row:', req.session.selectedRow);
+        // console.log('Selected Row:', req.session.selectedRow);
         res.redirect('/TrainingPage');
     } catch (error) {
         console.error('Error:', error);
