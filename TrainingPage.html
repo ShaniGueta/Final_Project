@@ -4,13 +4,6 @@
     <meta charset="UTF-8">
     <title>Training</title>
     <link rel="stylesheet"  href="/styles.css">
-    <script src="index.js">
-        // Disable the back button
-        history.pushState(null, null, location.href);
-        window.onpopstate = function () {
-            history.go(1);
-        };
-    </script>
 </head>
 <body>
 <div class="training-container">
@@ -35,6 +28,11 @@
 </div>
 
     <script>
+        // Disable the back button
+        history.pushState(null, null, location.href);
+        window.onpopstate = function () {
+            history.go(1);
+        };
         // Enable submit button only if an option is selected
         document.getElementById('trainingPage').addEventListener('change', function () {
             var submitButton = document.getElementById('submitButton');

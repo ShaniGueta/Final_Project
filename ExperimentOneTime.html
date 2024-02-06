@@ -4,13 +4,6 @@
     <meta charset="UTF-8">
     <title>Welcome to the Experiment Page</title>
     <link rel="stylesheet" href="/styles.css">
-    <script src="index.js">
-        // Disable the back button
-        history.pushState(null, null, location.href);
-        window.onpopstate = function () {
-            history.go(1);
-        };
-    </script>
 </head>
 <body class="container" id="ExperimentOneTime">
     <h1>Welcome to the Experiment Page</h1>
@@ -58,6 +51,11 @@
     </form>
 
     <script>
+        // Disable the back button
+        history.pushState(null, null, location.href);
+        window.onpopstate = function () {
+            history.go(1);
+        };
         // Randomly choose between "Blue" and "Red"
         const colors = ["Blue", "Red"];
         const chosenColor = colors[Math.floor(Math.random() * colors.length)];

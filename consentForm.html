@@ -3,13 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/styles.css">
-    <script src="index.js">
-        // Disable the back button
-        history.pushState(null, null, location.href);
-        window.onpopstate = function () {
-            history.go(1);
-        };
-    </script>
     <title>Consent form</title>
 </head>
 <body>
@@ -86,6 +79,11 @@ participate in the study.</p>
 </form>
 
 <script>
+    // Disable the back button
+    history.pushState(null, null, location.href);
+    window.onpopstate = function () {
+        history.go(1);
+    };
     // Enable submit button only if "I Agree" is selected
     document.getElementById('consentForm').addEventListener('change', function () {
         var agreeRadio = document.getElementById('agreeRadio');
