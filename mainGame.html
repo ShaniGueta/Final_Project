@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/styles.css">
     <title>Welcome to the experiment</title>
+    <script src="index.js">
+        // Disable the back button
+        history.pushState(null, null, location.href);
+        window.onpopstate = function () {
+            history.go(1);
+        };
+    </script>
 </head>
 <body id="codeEnter">
     <div class="container">
