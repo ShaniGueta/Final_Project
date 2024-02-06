@@ -85,7 +85,7 @@ app.use(session({
 
 app.post('/submit-code', (req, res) => {
     const code = req.body.code;
-    console.log('Received code:' ${code});
+    // console.log('Received code:' ${code});
     req.session.userCode = code;
     res.redirect('/mainGame');
 });
