@@ -90,21 +90,28 @@ async function writeCSV(filePath, data) {
     });
 
     await csvWriter.writeRecords(data);
-
-    // Streamify the local file for upload
-    const stream = createReadStream(fs.readFileSync('temp.csv'));
-    stream.on('end', () => {
-        // Now the stream is complete, proceed with uploading
-        file.createWriteStream().end(stream.readableStreamBody);
-    })
-    .on('error', (error) => {
-        console.error('Error during CSV write:', error);
-        reject(error);
+    fs.createReadStream('temp.csv')
+    .pipe(file.createWriteStream())
+    .on('error', function(err) {})
+    .on('finish', function() {
+    // The file upload is complete.
+        console.log("Upload to gcs complete!!!!");
+        fs.unlinkSync('temp.csv');
     });
+    // // Streamify the local file for upload
+    // const stream = createReadStream(fs.readFileSync('temp.csv'));
+    // stream.on('end', () => {
+    //     // Now the stream is complete, proceed with uploading
+    //     file.createWriteStream().end(stream.readableStreamBody);
+    // })
+    // .on('error', (error) => {
+    //     console.error('Error during CSV write:', error);
+    //     reject(error);
+    // });
+    //
+    //
+    // // Delete the local file
 
-
-    // Delete the local file
-    fs.unlinkSync('temp.csv');
 }
 
 // function readPasswordsFromCSV() {
@@ -237,7 +244,7 @@ app.post('/submit-training-answer', async (req, res) => {
             }
             return row;
         });
-        console.log("updatedData: " + updatedData + "----"+ "data: " + data )
+        // console.log("updatedData: " + updatedData + "----"+ "data: " + data )
 
         // Write the updated data back to the existing CSV file
         await writeCSV(csvFilePath, updatedData);
