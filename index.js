@@ -25,7 +25,6 @@ app.use(session({
 
 // Function to read CSV file from GCS
 async function readCSV(filePath) {
-    console.log("read csv: " + filePath);
     const file = storage.bucket('my-csv-buckett').file(filePath);
     const data = [];
     return new Promise((resolve, reject) => {
