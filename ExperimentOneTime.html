@@ -6,35 +6,37 @@
     <link rel="stylesheet" href="/styles.css">
 </head>
 <body class="container" id="ExperimentOneTime">
+
     <h1>Welcome to the Experiment Page</h1>
 
-    <p>In this experiment, you are participating in a group decision-making scenario</p>
-    <p>using 'clickcoins' as mock-up currency.</p>
-    </p> 1 clickcoin = $0.003.</p>
+    <p>In this group decision-making game, you'll use 'clickcoins' as a virtual currency.</p>
+    <p>Think of 1 clickcoin as $0.003.</p>
 
-    <p><h2>Payment Details:</h2></p>
-    <p><b>Base Payment:</b> You start with 420 clickcoins.</p>
-    <p><b>Impact of Decisions:</b> Your choices during the experiment can either increase or decrease your clickcoins.</p>
-    <br>
-    <p><h2>Objective:</h2></p>
-    <p>Your task is to determine the dominant color in a pitcher</p>
-    <p>which is defined by the color of the majority of the balls it contains.</p>
-    <p><h3>Key Information:</h3></p>
+    <p><h2>Here's what you need to know:</h2></p>
+    <p><b>Starting Point:</b> You begin with <b>420</b> clickcoins in your virtual wallet.</p>
+    <p><b>Your Decisions Matter:</b> The choices you make can either add to your clickcoins or take some away.</p>
 
-    <p><b>Balls Colors:</b> Blue and Red.</p>
-    <p id="ballRatio"><b>Pitcher Contents:</b> The pitcher has <b>100</b> balls, with <b>{BallRatio}</b> of one color and <b>{OtherColorBallRatio}</b> of another color. </p>
-    <p id="groupSize"><b>Group Size:</b> You are one of <b>{groupsize}</b> participants.</p>
-    <p id="relativeMajority"><b>Majority Vote Requirement:</b>  A majority vote, needing at least <b>{Relative Majority}</b> members' agreement, is required for decision-making.</p>
-    <p id="signalColor"><b>Your Observation:</b> You have drawn a ball from the pitcher, and it is <b><span id="chosenColor"></span></b></p>
     <br>
-    <p><h2>Reward Structure:</h2></p>
+    <p><h2>Your Mission:</h2></p>
+    <p>Guess the main color (more than half) of the balls in a pitcher</p>
+    <p>they can either be mostly Red or mostly Blue.</p>
 
-    <p><b>Correct Identification:</b> If the group correctly identifies the dominant color, each member <b>gains an additional 84 clickcoins.</b></p>
-    <p><b>Incorrect Identification:</b> If the group is incorrect, each member <b>loses 84 clickcoins.</b></p>
-    <br>
-    <p><h2>Your Decision:</h2></p>
-    <p>Considering the information and the color of the ball you drew, </p>
-    <p><b>what is your choice regarding the dominant color in the pitcher?</b></p>
+    <h3>How It Works:</h3>
+
+    <p><b>Winning:</b> If you and the majority of the group guess the dominant color right, each of you wins an extra 84 clickcoins.</p>
+    <p><b>Losing:</b>A wrong group guess means each of you drops 84 clickcoins.</p>
+
+    <h3>Important Details:</h3>
+
+    <p><b>Balls Colors:</b> You're dealing with Red and Blue balls only.</p>
+    <p id="ballRatio"><b>Pitcher's Mix:</b>It holds 100 balls, with <b>{BallRatio}</b> of one color and <b>{OtherColorBallRatio}</b> of the other</p>
+    <p id="groupSize"><b>Your Team:</b>You're one of <b>{groupsize}</b> participants.</p>
+    <p id="relativeMajority"><b>Group Decision:</b>At least {Relative Majority} of you need to choose the right color to win.</p>
+    <p id="signalColor"><b>What You Know:</b>You've already pulled out a <b><span id="chosenColor"></span></b> ball from the pitcher.</p>
+
+    <p><h2>Time to Decide:</h2></p>
+    <p>Given the info and the {chosenColor} of the ball you drew</p>
+    <p><b>what's your bet on the pitcher's predominant color?</b></p>
 
     <form id="experimentOneTimeForm" action="/submit-experiment-answer-OneTime" method="post" onsubmit="return submitForm()">
         <!-- Radio buttons for color selection -->
