@@ -69,7 +69,8 @@
         const chosenColor = colors[Math.floor(Math.random() * colors.length)];
 
         // Update the content of the HTML element with the chosen color
-        document.getElementsByClassName('chosenColor').innerText = chosenColor;
+        document.getElementsByClassName('chosenColor')[0].innerText = chosenColor;
+
 
         // Set the value of the hidden input for chosenColor
         document.getElementById('hiddenChosenColor').value = chosenColor;
