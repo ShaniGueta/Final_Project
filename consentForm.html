@@ -81,16 +81,39 @@ participate in the study.</p>
 
 <script>
     // Disable the back button
+    // history.pushState(null, null, location.href);
+    // window.onpopstate = function () {
+    //     history.go(1);
+    // };
+    // Enable submit button only if "I Agree" is selected
+    // document.getElementById('consentForm').addEventListener('change', function () {
+    //     var agreeRadio = document.getElementById('agreeRadio');
+    //     var submitButton = document.getElementById('submitButton');
+    //     submitButton.disabled = !agreeRadio.checked;
+    // });
+
+
+    
+
+    // Disable the back button
     history.pushState(null, null, location.href);
-    window.onpopstate = function () {
+    window.onpopstate = function(event) {
         history.go(1);
     };
+
     // Enable submit button only if "I Agree" is selected
     document.getElementById('consentForm').addEventListener('change', function () {
         var agreeRadio = document.getElementById('agreeRadio');
         var submitButton = document.getElementById('submitButton');
         submitButton.disabled = !agreeRadio.checked;
     });
+
+    // Prevent users from navigating away from the current page
+    window.addEventListener('beforeunload', function(event) {
+        event.preventDefault();
+        event.returnValue = '';
+    });
+
 </script>
 </div>
 </body>
