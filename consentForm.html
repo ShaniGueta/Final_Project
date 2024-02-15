@@ -7,114 +7,93 @@
 </head>
 <body>
 <div class="container">
-<h1>Informed Consent Form for Experimental Participation</h1>
+    <h1>Informed Consent Form for Experimental Participation</h1>
 
-<p><strong>Title of Study:</strong> Decision-Making Experiment</p>
+    <p><strong>Title of Study:</strong> Decision-Making Experiment</p>
 
-<p>You are invited to participate in a research experiment conducted online using the Prolific
+    <p>You are invited to participate in a research experiment conducted online using the Prolific
     platform. <br>Before you decide whether to participate, it is important for you to understand the
     nature of the study,<br> what will be expected of you, and any potential risks or benefits. Please
     read this informed consent form carefully.</p>
 
-<p><strong>Purpose of the Study:</strong>
-The purpose of this study is to investigate decision-making processes in
+    <p><strong>Purpose of the Study:</strong>
+    The purpose of this study is to investigate decision-making processes in
     group settings when individuals have access to partial information.</p>
 
-<p><strong>Procedures:</strong>
+    <p><strong>Procedures:</strong>
     You will be asked to provide some personal information, including your email, age, and gender. <br>
     You will receive instructions about the experiment's course, including how decisions are made in various scenarios. <br>
     You will engage in decision-making tasks as described in the experiment's scenarios.</p>
 
-<p><strong>Risks and Benefits:</strong>
+    <p><strong>Risks and Benefits:</strong>
     There are no known physical risks associated with this study. <br>However, as
     with any online activity, there may be potential risks related to data security and privacy,<br>but we
     do not collect any personal user data and you are not recorded at any time during the
     experiment. We will make every effort to protect your information.</p>
 
-<p>The potential benefits of participating include contributing to scientific research in the field of
+    <p>The potential benefits of participating include contributing to scientific research in the field of
     decision-making and the opportunity to earn financial rewards based on your decisions during
-    the experiment.<br> For completing the experiment, you will get 416 clickcoins, a mockup currency equivalent to $1.25
+    the experiment.<br> </p>
+
+    <p>For completing the experiment, you will get 416 clickcoins, a mockup currency equivalent to $1.25
     (based on the exchange rate of 1 ClickCoin = $0.003)
     your performance may result in either an increase or decrease in this amount.</p>
 
-<p><strong>Confidentiality:</strong>
+    <p><strong>Confidentiality:</strong>
     Your personal information, including email, <br>will not be recorded (other than
     your prolific ID, for payment purposes). <br> Data collected during the experiment will be anonymized
     and aggregated for analysis.</p>
 
-<p><strong>Publishing the Results:</strong>
+    <p><strong>Publishing the Results:</strong>
     The results of the experiment will be used to expand scientific
     knowledge on the subject being studied and may be described in publications,<br> such as
     academic conferences, articles, or research papers.</p>
 
-<p><strong>Voluntary Participation:</strong>
+    <p><strong>Voluntary Participation:</strong>
     Participation in this study is entirely voluntary.<br> You have the right to
     withdraw from the experiment, but in this case, you will not get any payment.</p>
 
-<p><strong>Payment Method:</strong>
+    <p><strong>Payment Method:</strong>
     You will get the payment approximately within 2-3 days.</p>
 
-<p><strong>Contact Information:</strong>
-If you have any questions or concerns about this study, please contact us
+    <p><strong>Contact Information:</strong>
+    If you have any questions or concerns about this study, please contact us
     through one of the following emails:<br> <a href="mailto:barhot@post.bgu.ac.il">barhot@post.bgu.ac.il</a>,
     <a href="mailto:galeta@post.bgu.ac.il">galeta@post.bgu.ac.il</a>,
     <a href="mailto:guets@post.bgu.ac.il">guets@post.bgu.ac.il</a></p>
 
-<h2><strong>Consent:</strong></h2>
-<p>By clicking the "I Agree" button below,<br> you indicate that you have read and
-understood the information provided in this informed consent form,<br> and you voluntarily agree to
-participate in the study.</p>
+    <h2><strong>Consent:</strong></h2>
+    <p>By clicking the "I Agree" button below,<br> you indicate that you have read and
+    understood the information provided in this informed consent form,<br> and you voluntarily agree to
+    participate in the study.</p>
 
-<form id="consentForm" action="/submit-consent" method="post">
-    <label>
-        <input type="radio" name="consent" value="agree" id="agreeRadio" required>
-        I Agree
-    </label>
-    <br>
-    <label>
-        <input type="radio" name="consent" value="disagree" id="disagreeRadio" required>
-        I Do Not Agree
-    </label>
-    <br>
-    <input type="submit" value="Submit" id="submitButton" disabled>
-</form>
+    <form id="consentForm" action="/submit-consent" method="post">
+        <label>
+            <input type="radio" name="consent" value="agree" id="agreeRadio" required>
+            I Agree
+        </label>
+        <br>
+        <label>
+            <input type="radio" name="consent" value="disagree" id="disagreeRadio" required>
+            I Do Not Agree
+        </label>
+        <br>
+        <input type="submit" value="Submit" id="submitButton" disabled>
+    </form>
 
-<script>
-    // Disable the back button
-    // history.pushState(null, null, location.href);
-    // window.onpopstate = function () {
-    //     history.go(1);
-    // };
-    // Enable submit button only if "I Agree" is selected
-    // document.getElementById('consentForm').addEventListener('change', function () {
-    //     var agreeRadio = document.getElementById('agreeRadio');
-    //     var submitButton = document.getElementById('submitButton');
-    //     submitButton.disabled = !agreeRadio.checked;
-    // });
-
-
-    
-
-    // Disable the back button
-    history.pushState(null, null, location.href);
-    window.onpopstate = function(event) {
-        history.go(1);
-    };
-
-    // Enable submit button only if "I Agree" is selected
-    document.getElementById('consentForm').addEventListener('change', function () {
-        var agreeRadio = document.getElementById('agreeRadio');
-        var submitButton = document.getElementById('submitButton');
-        submitButton.disabled = !agreeRadio.checked;
-    });
-
-    // Prevent users from navigating away from the current page
-    window.addEventListener('beforeunload', function(event) {
-        event.preventDefault();
-        event.returnValue = '';
-    });
-
-</script>
+    <script>
+        // Disable the back button
+        history.pushState(null, null, location.href);
+        window.onpopstate = function () {
+            history.go(1);
+        };
+        // Enable submit button only if "I Agree" is selected
+        document.getElementById('consentForm').addEventListener('change', function () {
+            var agreeRadio = document.getElementById('agreeRadio');
+            var submitButton = document.getElementById('submitButton');
+            submitButton.disabled = !agreeRadio.checked;
+        });
+    </script>
 </div>
 </body>
 </html>

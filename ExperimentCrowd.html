@@ -12,12 +12,11 @@
     <p>In this group decision-making game, you'll use 'clickcoins' as a virtual currency.</p>
     <p>Think of 1 clickcoin as $0.003.</p>
 
-    <p><h2>Here's what you need to know:</h2></p>
+    <p><h3>Here's what you need to know:</h3></p>
     <p><b>Starting Point:</b> You begin with <b>420</b> clickcoins in your virtual wallet.</p>
-    <p><b>Your Decisions Matter:</b>The choices you make can either add to your clickcoins or take some away.</p>
+    <p><b>Your Decisions Matter:</b> The choices you make can either add to your clickcoins or take some away.</p>
 
-    <br>
-    <h2>Your Mission:</h2>
+    <h3>Your Mission:</h3>
     <p>Guess the main color (more than half) of the balls in a pitcher </p>
     <p>they can either be mostly Red or mostly Blue.</p>
 
@@ -25,25 +24,24 @@
 
     <p><b>To Play:</b> It costs 84 clickcoins to make a guess about the pitcher's color.</p>
     <p id="relativeMajority"><b>Winning:</b> If you and at least <b>{Relative Majority}</b> others decide to guess and you're right about the majority color, you win 168 clickcoins (your 84 back plus another 84).</p>
-    <p><b>Losing:</b>Guess wrong, and you lose your 84 clickcoins.</p>
+    <p><b>Losing:</b> Guess wrong, and you lose your 84 clickcoins.</p>
     <p><b>If the Game Doesn't Start:</b> If not enough people (at least {Relative Majority}) decide to play, you don't lose any clickcoins and get your 84 back.</p>
 
     <h3>Important Details:</h3>
 
-    <p><b>Balls Colors:</b> Blue and Red.</p>
-    <p id="ballRatio"><b>Pitcher's Mix:</b>It holds 100 balls, with <b>{BallRatio}</b> of one color and <b>{OtherColorBallRatio}</b> of the other</p>
-    <p id="groupSize"><b>Your Team:</b>You're one of <b>{groupsize}</b> participants.</p>
-    <p><b>Group Decision:</b>At least {Relative Majority} of you need to agree to reveal the pitcher's color.</p>
+    <p><b>Balls Colors:</b> You're dealing with Red and Blue balls only.</p>
+    <p id="ballRatio"><b>Pitcher's Mix:</b> It holds 100 balls, with <b>{BallRatio}</b> of one color and <b>{OtherColorBallRatio}</b> of the other</p>
+    <p id="groupSize"><b>Your Team:</b> You're one of <b>{groupsize}</b> participants.</p>
+    <p><b>Group Decision:</b> At least {Relative Majority} of you need to agree to reveal the pitcher's color.</p>
     <p><b></b></p>
-    <p id="signalColor"><b>What You Know:</b>You've already pulled out a <b><span class="chosenColor"></span></b> ball from the pitcher.</p>
-    <p id="LotteryColor"><b>Lottery Option:</b>Join the color guessing game by paying 84 clickcoins. You can either guess <b>{Lottery Card Color}</b> or opt-out. </p>
+    <p id="signalColor"><b>What You Know:</b> You've pulled out one ball from the pitcher and it is <b><span id="chosenColor"></span></b>.</p>
+    <p id="LotteryColor"><b>Lottery Option:</b> Join the color guessing game by paying 84 clickcoins. You can either guess <b>{Lottery Card Color}</b> or opt-out. </p>
     <p>If the majority of balls are same color as your guess you win an extra 84 clickcoins, making 168 in total.</p>
     <p>If the majority of the balls are in the other color, you lose your 84 clickcoins.</p>
     <p>If not enough of you play, you get your 84 clickcoins back. </p>
 
     <p><h2>Time to Decide:</h2></p>
     <p>Given the info and the <span class="chosenColor"></span> ball you drew</p>
-<!--    <p>Given the info and the {chosenColor} of the ball you drew</p>-->
     <p><b>do you want to reveal the dominant color in the pitcher?</b></p>
 
     <form id="ExperimentCrowdPage" action='/submit-experiment-answer-Crowd' method="post" onsubmit="return submitForm()">
