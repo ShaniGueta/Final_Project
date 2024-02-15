@@ -32,10 +32,10 @@
     <p id="ballRatio"><b>Pitcher's Mix:</b>It holds 100 balls, with <b>{BallRatio}</b> of one color and <b>{OtherColorBallRatio}</b> of the other</p>
     <p id="groupSize"><b>Your Team:</b>You're one of <b>{groupsize}</b> participants.</p>
     <p id="relativeMajority"><b>Group Decision:</b>At least {Relative Majority} of you need to choose the right color to win.</p>
-    <p id="signalColor"><b>What You Know:</b>You've already pulled out a <b><span id="chosenColor"></span></b> ball from the pitcher.</p>
+    <p id="signalColor"><b>What You Know:</b>You've already pulled out a <b><span class="chosenColor"></span></b> ball from the pitcher.</p>
 
     <p><h2>Time to Decide:</h2></p>
-    <p>Given the info and the {chosenColor} of the ball you drew</p>
+    <p>Given the info and the <span class="chosenColor"></span> ball you drew</p>
     <p><b>what's your bet on the pitcher's predominant color?</b></p>
 
     <form id="experimentOneTimeForm" action="/submit-experiment-answer-OneTime" method="post" onsubmit="return submitForm()">
@@ -63,8 +63,10 @@
         const chosenColor = colors[Math.floor(Math.random() * colors.length)];
 
         // Update the content of the HTML element with the chosen color
-        document.getElementById('chosenColor').innerText = chosenColor;
-
+        const chosenColorElements = document.getElementsByClassName('chosenColor');
+        for (let element of chosenColorElements) {
+            element.innerText = chosenColor;
+        }
         // Set the value of the hidden input for chosenColor
         document.getElementById('hiddenChosenColor').value = chosenColor;
 
