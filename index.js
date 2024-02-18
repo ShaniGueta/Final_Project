@@ -59,42 +59,28 @@ async function readCSV(filePath) {
 //             fs.unlinkSync('temp.csv');
 //         });
 // }
-// async function writeCSV(filePath, data, userId) {
-//     const uniqueFileName = `temp_${userId}.csv`;
-//     const file = storage.bucket('my-csv-bucket').file(filePath);
-//     const csvWriter = createCsvWriter({
-//         path: uniqueFileName,
-//         header: Object.keys(data[0]).map((key) => ({ id: key, title: key })),
-//     });
-//     await csvWriter.writeRecords(data);
-//     fs.createReadStream(uniqueFileName)
-//         .pipe(file.createWriteStream())
-//         .on('error', function(err) {})
-//         .on('finish', function() {
-//             // The file upload is complete.
-//             console.log("Upload to GCS completed");
-//             fs.unlinkSync(uniqueFileName);
-//         });
-// }
 
-async function writeCSV(filePath, data, userId) {
-    const uniqueFileName = `temp_${userId}.csv`;
-    const file = storage.bucket('my-csv-bucket').file(filePath);
+let fileCounter = 0; // Define a global counter for the file name
+
+async function writeCSV(filePath, data) {
+    const file = storage.bucket('my-csv-buckett').file(filePath);
     const csvWriter = createCsvWriter({
-        path: uniqueFileName,
+        path: `temp_${fileCounter}.csv`, // Use the counter in the file name
         header: Object.keys(data[0]).map((key) => ({ id: key, title: key })),
     });
     await csvWriter.writeRecords(data);
-    const fileReadStream = createReadStream(uniqueFileName);
-    fileReadStream.pipe(file.createWriteStream())
-        .on('error', function(err) {
-            console.error('Error uploading file to GCS:', err);
-        })
+    fs.createReadStream(`temp_${fileCounter}.csv`)
+        .pipe(file.createWriteStream())
+        .on('error', function(err) {})
         .on('finish', function() {
-            console.log('Upload to GCS completed');
-            fs.unlinkSync(uniqueFileName);
+            // The file upload is complete.
+            console.log("Upload to GCS completed");
+            fs.unlinkSync(`temp_${fileCounter}.csv`);
         });
+
+    fileCounter++; // Increment the counter for the next file
 }
+
 
 function readPasswordsFromCSV() {
     return new Promise(async (resolve, reject) => {
@@ -185,8 +171,7 @@ app.post('/submit-training-answer', async (req, res) => {
             }
             return row;
         });
-        const userId = req.session.selectedRow.UserID;
-        await writeCSV(csvFilePath, updatedData,userId); // Write the updated data back to the existing CSV file
+        await writeCSV(csvFilePath, updatedData); // Write the updated data back to the existing CSV file
         console.log('User training answer saved to existing CSV file.');
         if (req.session.selectedRow.senario === '1') {
             res.redirect('/ExperimentOneTime');
@@ -231,8 +216,7 @@ app.post('/submit-experiment-answer-OneTime', async (req, res) => {
             return row;
         });
         // Write the updated data back to the existing CSV file
-        const userId = req.session.selectedRow.UserID;
-        await writeCSV(csvFilePath, updatedData, userId);
+        await writeCSV(csvFilePath, updatedData);
         console.log('User details saved to existing CSV file.');
         res.redirect('password');
     } catch (error) {
@@ -271,8 +255,7 @@ app.post('/submit-experiment-answer-Crowd', async (req, res) => {
             }
             return row;
         });
-        const userId = req.session.selectedRow.UserID;
-        await writeCSV(csvFilePath, updatedData,userId);
+        await writeCSV(csvFilePath, updatedData);
         console.log('User details saved to existing CSV file.');
         res.redirect('/password');
     } catch (error) {
