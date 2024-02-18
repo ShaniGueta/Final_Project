@@ -86,31 +86,53 @@ async function readCSV(filePath) {
 
 
 //--------------try catch solution----------------
+//
+// async function writeCSV(filePath, data) {
+//     const file = storage.bucket('my-csv-buckett').file(filePath);
+//     const csvWriter = createCsvWriter({
+//         path: 'temp.csv', // Temporarily write to a local file
+//         header: Object.keys(data[0]).map((key) => ({ id: key, title: key })),
+//     });
+//     try {
+//         await csvWriter.writeRecords(data);
+//         fs.createReadStream('temp.csv')
+//             .pipe(file.createWriteStream())
+//             .on('error', function(err) {})
+//             .on('finish', function() {
+//                 // The file upload is complete.
+//                 console.log("Upload to GCS completed");
+//                 try {
+//                     fs.unlinkSync('temp.csv');
+//                 } catch (err) {
+//                     console.error("Error deleting temp.csv:", err);
+//                 }
+//             });
+//     } catch (err) {
+//         console.error("Error writing records to temp.csv:", err);
+//     }
+// }
+
+let fileCounter = 0; // Define a global counter for the file name
 
 async function writeCSV(filePath, data) {
     const file = storage.bucket('my-csv-buckett').file(filePath);
     const csvWriter = createCsvWriter({
-        path: 'temp.csv', // Temporarily write to a local file
+        path: `temp_${fileCounter}.csv`, // Use the counter in the file name
         header: Object.keys(data[0]).map((key) => ({ id: key, title: key })),
     });
-    try {
-        await csvWriter.writeRecords(data);
-        fs.createReadStream('temp.csv')
-            .pipe(file.createWriteStream())
-            .on('error', function(err) {})
-            .on('finish', function() {
-                // The file upload is complete.
-                console.log("Upload to GCS completed");
-                try {
-                    fs.unlinkSync('temp.csv');
-                } catch (err) {
-                    console.error("Error deleting temp.csv:", err);
-                }
-            });
-    } catch (err) {
-        console.error("Error writing records to temp.csv:", err);
-    }
+    await csvWriter.writeRecords(data);
+    const tempFilePath = `temp_${fileCounter}.csv`; // Store the file name before incrementing the counter
+    fileCounter++; // Increment the counter for the next file
+    fs.createReadStream(tempFilePath)
+        .pipe(file.createWriteStream())
+        .on('error', function(err) {})
+        .on('finish', function() {
+            // The file upload is complete.
+            console.log("Upload to GCS completed");
+            fs.unlinkSync(tempFilePath);
+        });
 }
+
 
 
 function readPasswordsFromCSV() {
