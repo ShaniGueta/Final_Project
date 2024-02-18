@@ -43,43 +43,43 @@ async function readCSV(filePath) {
 }
 
 // Function to write to CSV file in GCS
-// async function writeCSV(filePath, data) {
-//     const file = storage.bucket('my-csv-buckett').file(filePath);
-//     const csvWriter = createCsvWriter({
-//         path: 'temp.csv', // Temporarily write to a local file
-//         header: Object.keys(data[0]).map((key) => ({ id: key, title: key })),
-//     });
-//     await csvWriter.writeRecords(data);
-//     fs.createReadStream('temp.csv')
-//         .pipe(file.createWriteStream())
-//         .on('error', function(err) {})
-//         .on('finish', function() {
-//             // The file upload is complete.
-//             console.log("Upload to GCS completed");
-//             fs.unlinkSync('temp.csv');
-//         });
-// }
-
-let fileCounter = 0; // Define a global counter for the file name
-
 async function writeCSV(filePath, data) {
     const file = storage.bucket('my-csv-buckett').file(filePath);
     const csvWriter = createCsvWriter({
-        path: `temp_${fileCounter}.csv`, // Use the counter in the file name
+        path: 'temp.csv', // Temporarily write to a local file
         header: Object.keys(data[0]).map((key) => ({ id: key, title: key })),
     });
     await csvWriter.writeRecords(data);
-    fs.createReadStream(`temp_${fileCounter}.csv`)
+    fs.createReadStream('temp.csv')
         .pipe(file.createWriteStream())
         .on('error', function(err) {})
         .on('finish', function() {
             // The file upload is complete.
             console.log("Upload to GCS completed");
-            fs.unlinkSync(`temp_${fileCounter}.csv`);
+            fs.unlinkSync('temp.csv');
         });
-
-    fileCounter++; // Increment the counter for the next file
 }
+
+// let fileCounter = 0; // Define a global counter for the file name
+//
+// async function writeCSV(filePath, data) {
+//     const file = storage.bucket('my-csv-buckett').file(filePath);
+//     const csvWriter = createCsvWriter({
+//         path: `temp_${fileCounter}.csv`, // Use the counter in the file name
+//         header: Object.keys(data[0]).map((key) => ({ id: key, title: key })),
+//     });
+//     await csvWriter.writeRecords(data);
+//     fs.createReadStream(`temp_${fileCounter}.csv`)
+//         .pipe(file.createWriteStream())
+//         .on('error', function(err) {})
+//         .on('finish', function() {
+//             // The file upload is complete.
+//             console.log("Upload to GCS completed");
+//             fs.unlinkSync(`temp_${fileCounter}.csv`);
+//         });
+//
+//     fileCounter++; // Increment the counter for the next file
+// }
 
 
 function readPasswordsFromCSV() {
