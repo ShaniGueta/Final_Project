@@ -122,6 +122,7 @@ async function writeCSV(filePath, data) {
     });
     await csvWriter.writeRecords(data);
     const tempFilePath = `temp_${fileCounter}.csv`; // Store the file name before incrementing the counter
+    console.log(tempFilePath)
     fileCounter++; // Increment the counter for the next file
     fs.createReadStream(tempFilePath)
         .pipe(file.createWriteStream())
