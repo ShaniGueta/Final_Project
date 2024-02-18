@@ -59,6 +59,24 @@ async function readCSV(filePath) {
 //             fs.unlinkSync('temp.csv');
 //         });
 // }
+// async function writeCSV(filePath, data, userId) {
+//     const uniqueFileName = `temp_${userId}.csv`;
+//     const file = storage.bucket('my-csv-bucket').file(filePath);
+//     const csvWriter = createCsvWriter({
+//         path: uniqueFileName,
+//         header: Object.keys(data[0]).map((key) => ({ id: key, title: key })),
+//     });
+//     await csvWriter.writeRecords(data);
+//     fs.createReadStream(uniqueFileName)
+//         .pipe(file.createWriteStream())
+//         .on('error', function(err) {})
+//         .on('finish', function() {
+//             // The file upload is complete.
+//             console.log("Upload to GCS completed");
+//             fs.unlinkSync(uniqueFileName);
+//         });
+// }
+
 async function writeCSV(filePath, data, userId) {
     const uniqueFileName = `temp_${userId}.csv`;
     const file = storage.bucket('my-csv-bucket').file(filePath);
@@ -67,12 +85,13 @@ async function writeCSV(filePath, data, userId) {
         header: Object.keys(data[0]).map((key) => ({ id: key, title: key })),
     });
     await csvWriter.writeRecords(data);
-    fs.createReadStream(uniqueFileName)
-        .pipe(file.createWriteStream())
-        .on('error', function(err) {})
+    const fileReadStream = createReadStream(uniqueFileName);
+    fileReadStream.pipe(file.createWriteStream())
+        .on('error', function(err) {
+            console.error('Error uploading file to GCS:', err);
+        })
         .on('finish', function() {
-            // The file upload is complete.
-            console.log("Upload to GCS completed");
+            console.log('Upload to GCS completed');
             fs.unlinkSync(uniqueFileName);
         });
 }
@@ -166,7 +185,7 @@ app.post('/submit-training-answer', async (req, res) => {
             }
             return row;
         });
-        const userId = req.session.UserID;
+        const userId = req.session.selectedRow.UserID;
         await writeCSV(csvFilePath, updatedData,userId); // Write the updated data back to the existing CSV file
         console.log('User training answer saved to existing CSV file.');
         if (req.session.selectedRow.senario === '1') {
@@ -212,7 +231,7 @@ app.post('/submit-experiment-answer-OneTime', async (req, res) => {
             return row;
         });
         // Write the updated data back to the existing CSV file
-        const userId = req.session.UserID;
+        const userId = req.session.selectedRow.UserID;
         await writeCSV(csvFilePath, updatedData, userId);
         console.log('User details saved to existing CSV file.');
         res.redirect('password');
@@ -252,7 +271,7 @@ app.post('/submit-experiment-answer-Crowd', async (req, res) => {
             }
             return row;
         });
-        const userId = req.session.UserID;
+        const userId = req.session.selectedRow.UserID;
         await writeCSV(csvFilePath, updatedData,userId);
         console.log('User details saved to existing CSV file.');
         res.redirect('/password');
