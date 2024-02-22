@@ -42,56 +42,8 @@ async function readCSV(filePath) {
     });
 }
 
-// Function to write to CSV file in GCS
-// async function writeCSV(filePath, data) {
-//     const file = storage.bucket('my-csv-buckett').file(filePath);
-//     const csvWriter = createCsvWriter({
-//         path: 'temp.csv', // Temporarily write to a local file
-//         header: Object.keys(data[0]).map((key) => ({ id: key, title: key })),
-//     });
-//     await csvWriter.writeRecords(data);
-//     fs.createReadStream('temp.csv')
-//         .pipe(file.createWriteStream())
-//         .on('error', function(err) {})
-//         .on('finish', function() {
-//             // The file upload is complete.
-//             console.log("Upload to GCS completed");
-//             fs.unlinkSync('temp.csv');
-//         });
-// }
-
-
-
-
-//--------------try catch solution----------------
-//
-// async function writeCSV(filePath, data) {
-//     const file = storage.bucket('my-csv-buckett').file(filePath);
-//     const csvWriter = createCsvWriter({
-//         path: 'temp.csv', // Temporarily write to a local file
-//         header: Object.keys(data[0]).map((key) => ({ id: key, title: key })),
-//     });
-//     try {
-//         await csvWriter.writeRecords(data);
-//         fs.createReadStream('temp.csv')
-//             .pipe(file.createWriteStream())
-//             .on('error', function(err) {})
-//             .on('finish', function() {
-//                 // The file upload is complete.
-//                 console.log("Upload to GCS completed");
-//                 try {
-//                     fs.unlinkSync('temp.csv');
-//                 } catch (err) {
-//                     console.error("Error deleting temp.csv:", err);
-//                 }
-//             });
-//     } catch (err) {
-//         console.error("Error writing records to temp.csv:", err);
-//     }
-// }
 
 let fileCounter = 0; // Define a global counter for the file name
-
 async function writeCSV(filePath, data) {
     const file = storage.bucket('my-csv-buckett').file(filePath);
     const csvWriter = createCsvWriter({
@@ -118,8 +70,6 @@ async function writeCSV(filePath, data) {
 
 }
 
-
-
 function readPasswordsFromCSV() {
     return new Promise(async (resolve, reject) => {
         const filePath = 'Input.csv';  // Assuming the file is in the root of your GCS bucket
@@ -143,12 +93,6 @@ app.use(session({
     saveUninitialized: true
 }));
 
-// app.post('/submit-code', (req, res) => {
-//     const code = req.body.code;
-//     // console.log('Received code:' ${code});
-//     req.session.userCode = code;
-//     res.redirect('/mainGame');
-// });
 app.post('/submit-code', async (req, res) => {
     try {
         const inputFilePath = "Input.csv"; // Replace with the actual path to your "Input" CSV file
@@ -208,33 +152,7 @@ function generatePassword() {
 }
 
 app.post('/submit-consent', async (req, res) => {
-    try {
-        // const inputFilePath = "Input.csv"; // Replace with the actual path to your "Input" CSV file
-        // const allRows = await readCSV(inputFilePath);
-        // if (allRows.length === 0) {
-        //     res.send('No rows available!');
-        //     return;
-        // }
-        // // Check if all rows have been used
-        // if (req.session.usedRows && req.session.usedRows.length === allRows.length) {
-        //     res.send('All rows have been used.');
-        //     return;
-        // }
-        // // Randomly select a row that hasn't been used
-        // let randomIndex;
-        // do {
-        //     randomIndex = Math.floor(Math.random() * allRows.length);
-        // } while (req.session.usedRows && req.session.usedRows.includes(randomIndex));
-        // req.session.selectedIndex = randomIndex;
-        // req.session.selectedRow = allRows[randomIndex];
-        // req.session.usedRows = req.session.usedRows || [];
-        // req.session.usedRows.push(randomIndex);
-        // console.log('Selected Row:', req.session.selectedRow);
-        res.redirect('/TrainingPage');
-    } catch (error) {
-        console.error('Error:', error);
-        res.send('An error occurred.');
-    }
+    res.redirect('/TrainingPage');
 });
 
 app.post('/submit-training-answer', async (req, res) => {
