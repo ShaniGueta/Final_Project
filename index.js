@@ -116,7 +116,9 @@ app.post('/submit-code', async (req, res) => {
         req.session.usedRows = req.session.usedRows || [];
         req.session.usedRows.push(randomIndex);
         const UserCode = req.body.code;
+        console.log(`-------The prolific code of this user is: ${UserCode} ----------`)
         const selectedIndex = req.session.selectedIndex;
+        console.log(`-------The selected row of this user is: ${selectedIndex} , of user ${UserCode}  ----------`)
         const columnName = 'ProlificCode';
         const csvFilePath = "Input.csv";
         const data = await readCSV(csvFilePath); // Read the existing CSV file
@@ -131,10 +133,10 @@ app.post('/submit-code', async (req, res) => {
             return row;
         });
         await writeCSV(csvFilePath, updatedData); // Write the updated data back to the existing CSV file
-        console.log('User prolific fode saved to existing CSV file.');
+        console.log(`User prolific code saved to existing CSV file. , of user ${UserCode} `);
         res.redirect('/mainGame');
     } catch (error) {
-        console.error('Error handling prolific code submission:', error);
+        console.error(`!!!!! of user ${UserCode} !!!!!!!!!!!!!!!!!!Error handling prolific code submission:`, error);
         res.status(500).send('Internal Server Error');
     }
 });
@@ -173,7 +175,7 @@ app.post('/submit-training-answer', async (req, res) => {
             return row;
         });
         await writeCSV(csvFilePath, updatedData); // Write the updated data back to the existing CSV file
-        console.log('User training answer saved to existing CSV file.');
+        console.log(`User training answer saved to existing CSV file. , of user ${selectedIndex} `);
         if (req.session.selectedRow.senario === '1') {
             res.redirect('/ExperimentOneTime');
         } else if (req.session.selectedRow.senario === '2') {
@@ -202,6 +204,7 @@ app.post('/submit-experiment-answer-OneTime', async (req, res) => {
         const Signal = req.body.hiddenChosenColor;
         const ChosenColor = req.body.hiddenUserColor;
         const selectedIndex = req.session.selectedIndex;
+        console.log(`---------user choose this color: ${chosenColor}------ of user ${selectedIndex}-------`)
         const csvFilePath = "Input.csv";
         const data = await readCSV(csvFilePath); // Read the existing CSV file
         // Update the selected row with the details
@@ -231,6 +234,7 @@ app.post('/submit-experiment-answer-Crowd', async (req, res) => {
         const Signal = req.body.hiddenChosenColor;
         const ChosenColor = req.body.hiddenUserColor;
         const selectedIndex = req.session.selectedIndex;
+        console.log(`---------user choose this color: ${chosenColor}-----of user ${selectedIndex}--------`)
         const csvFilePath = "Input.csv";
         const data = await readCSV(csvFilePath); // Read the CSV file from GCS
         // Generate a unique password
