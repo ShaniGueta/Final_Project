@@ -151,6 +151,26 @@ app.use(session({
 // });
 app.post('/submit-code', async (req, res) => {
     try {
+        const inputFilePath = "Input.csv"; // Replace with the actual path to your "Input" CSV file
+        const allRows = await readCSV(inputFilePath);
+        if (allRows.length === 0) {
+            res.send('No rows available!');
+            return;
+        }
+        // Check if all rows have been used
+        if (req.session.usedRows && req.session.usedRows.length === allRows.length) {
+            res.send('All rows have been used.');
+            return;
+        }
+        // Randomly select a row that hasn't been used
+        let randomIndex;
+        do {
+            randomIndex = Math.floor(Math.random() * allRows.length);
+        } while (req.session.usedRows && req.session.usedRows.includes(randomIndex));
+        req.session.selectedIndex = randomIndex;
+        req.session.selectedRow = allRows[randomIndex];
+        req.session.usedRows = req.session.usedRows || [];
+        req.session.usedRows.push(randomIndex);
         const UserCode = req.body.code;
         const selectedIndex = req.session.selectedIndex;
         const columnName = 'ProlificCode';
@@ -189,26 +209,26 @@ function generatePassword() {
 
 app.post('/submit-consent', async (req, res) => {
     try {
-        const inputFilePath = "Input.csv"; // Replace with the actual path to your "Input" CSV file
-        const allRows = await readCSV(inputFilePath);
-        if (allRows.length === 0) {
-            res.send('No rows available!');
-            return;
-        }
-        // Check if all rows have been used
-        if (req.session.usedRows && req.session.usedRows.length === allRows.length) {
-            res.send('All rows have been used.');
-            return;
-        }
-        // Randomly select a row that hasn't been used
-        let randomIndex;
-        do {
-            randomIndex = Math.floor(Math.random() * allRows.length);
-        } while (req.session.usedRows && req.session.usedRows.includes(randomIndex));
-        req.session.selectedIndex = randomIndex;
-        req.session.selectedRow = allRows[randomIndex];
-        req.session.usedRows = req.session.usedRows || [];
-        req.session.usedRows.push(randomIndex);
+        // const inputFilePath = "Input.csv"; // Replace with the actual path to your "Input" CSV file
+        // const allRows = await readCSV(inputFilePath);
+        // if (allRows.length === 0) {
+        //     res.send('No rows available!');
+        //     return;
+        // }
+        // // Check if all rows have been used
+        // if (req.session.usedRows && req.session.usedRows.length === allRows.length) {
+        //     res.send('All rows have been used.');
+        //     return;
+        // }
+        // // Randomly select a row that hasn't been used
+        // let randomIndex;
+        // do {
+        //     randomIndex = Math.floor(Math.random() * allRows.length);
+        // } while (req.session.usedRows && req.session.usedRows.includes(randomIndex));
+        // req.session.selectedIndex = randomIndex;
+        // req.session.selectedRow = allRows[randomIndex];
+        // req.session.usedRows = req.session.usedRows || [];
+        // req.session.usedRows.push(randomIndex);
         // console.log('Selected Row:', req.session.selectedRow);
         res.redirect('/TrainingPage');
     } catch (error) {
