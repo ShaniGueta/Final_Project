@@ -143,11 +143,36 @@ app.use(session({
     saveUninitialized: true
 }));
 
-app.post('/submit-code', (req, res) => {
-    const code = req.body.code;
-    // console.log('Received code:' ${code});
-    req.session.userCode = code;
-    res.redirect('/mainGame');
+// app.post('/submit-code', (req, res) => {
+//     const code = req.body.code;
+//     // console.log('Received code:' ${code});
+//     req.session.userCode = code;
+//     res.redirect('/mainGame');
+// });
+app.post('/submit-code', async (req, res) => {
+    try {
+        const UserCode = req.body.code;
+        const selectedIndex = req.session.selectedIndex;
+        const columnName = 'ProlificCode';
+        const csvFilePath = "Input.csv";
+        const data = await readCSV(csvFilePath); // Read the existing CSV file
+        const updatedData = data.map((row, index) => {
+            if (index === selectedIndex) {
+                // Update the specific column in the selected row
+                return {
+                    ...row,
+                    [columnName]: UserCode,
+                };
+            }
+            return row;
+        });
+        await writeCSV(csvFilePath, updatedData); // Write the updated data back to the existing CSV file
+        console.log('User prolific fode saved to existing CSV file.');
+        res.redirect('/mainGame');
+    } catch (error) {
+        console.error('Error handling prolific code submission:', error);
+        res.status(500).send('Internal Server Error');
+    }
 });
 
 // Function to generate a random password
