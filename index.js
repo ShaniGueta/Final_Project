@@ -204,7 +204,7 @@ app.post('/submit-experiment-answer-OneTime', async (req, res) => {
         const Signal = req.body.hiddenChosenColor;
         const ChosenColor = req.body.hiddenUserColor;
         const selectedIndex = req.session.selectedIndex;
-        console.log(`---------user choose this color: ${chosenColor}------ of user ${selectedIndex}-------`)
+        console.log(`---------user choose this color: ${ChosenColor}------ of user ${selectedIndex}-------`)
         const csvFilePath = "Input.csv";
         const data = await readCSV(csvFilePath); // Read the existing CSV file
         // Update the selected row with the details
