@@ -23,24 +23,48 @@ app.use(session({
     saveUninitialized: true
 }));
 
-// Function to read CSV file from GCS
+// // Function to read CSV file from GCS
+// async function readCSV(filePath) {
+//     const file = storage.bucket('my-csv-buckett').file(filePath);
+//     const data = [];
+//     return new Promise((resolve, reject) => {
+//         file.createReadStream()
+//             .pipe(csv())
+//             .on('data', (row) => {
+//                 data.push(row);
+//             })
+//             .on('end', () => {
+//                 resolve(data);
+//             })
+//             .on('error', (error) => {
+//                 reject(error);
+//             });
+//     });
+// }
 async function readCSV(filePath) {
     const file = storage.bucket('my-csv-buckett').file(filePath);
     const data = [];
-    return new Promise((resolve, reject) => {
-        file.createReadStream()
-            .pipe(csv())
-            .on('data', (row) => {
-                data.push(row);
-            })
-            .on('end', () => {
-                resolve(data);
-            })
-            .on('error', (error) => {
-                reject(error);
-            });
-    });
+    try {
+        await new Promise((resolve, reject) => {
+            file.createReadStream()
+                .pipe(csv())
+                .on('data', (row) => {
+                    data.push(row);
+                })
+                .on('end', () => {
+                    resolve();
+                })
+                .on('error', (error) => {
+                    reject(error);
+                });
+        });
+        return data;
+    } catch (error) {
+        console.error('Error reading CSV file:', error);
+        throw error; // rethrow the error to be caught by the caller
+    }
 }
+
 
 
 let fileCounter = 0; // Define a global counter for the file name
@@ -154,8 +178,14 @@ function generatePassword() {
 }
 
 app.post('/submit-consent', async (req, res) => {
-    res.redirect('/TrainingPage');
+    try {
+        res.redirect('/TrainingPage');
+    } catch (error) {
+        console.error('Error handling form submission:', error);
+        res.status(500).send('Internal Server Error');
+    }
 });
+
 
 app.post('/submit-training-answer', async (req, res) => {
     try {
@@ -326,3 +356,4 @@ app.get('/password', (req, res) => {
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
+
