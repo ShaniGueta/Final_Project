@@ -136,7 +136,7 @@ app.post('/submit-code', async (req, res) => {
         console.log(`User prolific code saved to existing CSV file. , of user ${UserCode} `);
         res.redirect('/mainGame');
     } catch (error) {
-        console.error(`!!!!! of user ${UserCode} !!!!!!!!!!!!!!!!!!Error handling prolific code submission:`, error);
+        console.error(`!!!!!!!!!!!!!!!!!!!!!!Error handling prolific code submission:`, error);
         res.status(500).send('Internal Server Error');
     }
 });
@@ -234,7 +234,7 @@ app.post('/submit-experiment-answer-Crowd', async (req, res) => {
         const Signal = req.body.hiddenChosenColor;
         const ChosenColor = req.body.hiddenUserColor;
         const selectedIndex = req.session.selectedIndex;
-        console.log(`---------user choose this color: ${chosenColor}-----of user ${selectedIndex}--------`)
+        console.log(`---------user choose this color: ${ChosenColor}-----of user ${selectedIndex}--------`)
         const csvFilePath = "Input.csv";
         const data = await readCSV(csvFilePath); // Read the CSV file from GCS
         // Generate a unique password
